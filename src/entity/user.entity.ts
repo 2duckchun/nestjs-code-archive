@@ -3,10 +3,12 @@ import {
   CreateDateColumn,
   Entity,
   Generated,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm';
+import { ProfileModel } from './profile.entity';
 
 export enum Role {
   USER = 'user',
@@ -24,36 +26,39 @@ export class UserModel {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    // 컬럼 타입 지정
-    type: 'varchar',
+  @Column()
+  email: string;
 
-    // 컬럼 이름 지정
-    name: 'title',
+  // @Column({
+  //   // 컬럼 타입 지정
+  //   type: 'varchar',
 
-    // 컬럼 길이 지정 (varchar 등에 사용 가능)
-    length: 255,
+  //   // 컬럼 이름 지정
+  //   name: 'title',
 
-    // null 허용 여부
-    nullable: true,
+  //   // 컬럼 길이 지정 (varchar 등에 사용 가능)
+  //   length: 255,
 
-    // 업데이트 가능 여부
-    // false면 처음 값 저장할때만 값 지정 가능
-    // 이후에는 값 변경 불가능
-    update: true,
+  //   // null 허용 여부
+  //   nullable: true,
 
-    // find()를 실행할 때 기본으로 값을 불러올지 정함
-    // 기본값은 true
-    select: true,
+  //   // 업데이트 가능 여부
+  //   // false면 처음 값 저장할때만 값 지정 가능
+  //   // 이후에는 값 변경 불가능
+  //   update: true,
 
-    // 아무것도 입력 안했을 때 컬럼에 기본으로 입력되는 값
-    default: 'test title!!',
+  //   // find()를 실행할 때 기본으로 값을 불러올지 정함
+  //   // 기본값은 true
+  //   select: true,
 
-    // 칼럼중에서 유일무이한 값이 되어야하는지 체크하는 값
-    // 회원가입시 이메일 등에 많이 사용함
-    unique: false,
-  })
-  title: string;
+  //   // 아무것도 입력 안했을 때 컬럼에 기본으로 입력되는 값
+  //   default: 'test title!!',
+
+  //   // 칼럼중에서 유일무이한 값이 되어야하는지 체크하는 값
+  //   // 회원가입시 이메일 등에 많이 사용함
+  //   unique: false,
+  // })
+  // title: string;
 
   @Column({
     type: 'enum',
@@ -78,4 +83,7 @@ export class UserModel {
   @Column()
   @Generated('uuid') // 자동으로 생성되는 값, @Column과 함께 사용해야한다.
   additionalId: number;
+
+  @OneToOne(() => ProfileModel, (profile) => profile.user)
+  profile: ProfileModel;
 }
