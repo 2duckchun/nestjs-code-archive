@@ -19,6 +19,7 @@ import { StudyPostModel } from './typestudy/entities/study-post.entity';
 import { StudyTagModel } from './typestudy/entities/study-tag.entity';
 import { TypestudyModule } from './typestudy/typestudy.module';
 import { UsersModule } from './users/users.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { UsersModule } from './users/users.module';
     }),
     TypestudyModule,
     UsersModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
