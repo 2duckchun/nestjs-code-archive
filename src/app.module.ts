@@ -22,6 +22,7 @@ import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { UserModel } from './users/entities/users.entity';
 import { PostModel } from './posts/entities/posts.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { PostModel } from './posts/entities/posts.entity';
     TypestudyModule,
     UsersModule,
     PostsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
