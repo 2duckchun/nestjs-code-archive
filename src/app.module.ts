@@ -20,6 +20,8 @@ import { StudyTagModel } from './typestudy/entities/study-tag.entity';
 import { TypestudyModule } from './typestudy/typestudy.module';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
+import { UserModel } from './users/entities/users.entity';
+import { PostModel } from './posts/entities/posts.entity';
 
 @Module({
   imports: [
@@ -42,6 +44,8 @@ import { PostsModule } from './posts/posts.module';
         StudyProfileModel,
         StudyPostModel,
         StudyTagModel,
+        UserModel,
+        PostModel,
       ],
       synchronize: true,
     }),
