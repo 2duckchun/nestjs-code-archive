@@ -9,8 +9,8 @@ import {
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm';
-import { ProfileModel } from './profile.entity';
-import { PostModel } from './post.entity';
+import { StudyProfileModel } from './study-profile.entity';
+import { StudyPostModel } from './study-post.entity';
 
 export enum Role {
   USER = 'user',
@@ -18,7 +18,7 @@ export enum Role {
 }
 
 @Entity()
-export class UserModel {
+export class StudyUserModel {
   // @PrimaryGeneratedColumn()
   // @PrimaryColumn()
   // Primary Column은 테이블에서 각 Row를 구분할 수 있는 칼럼이며, 모든 테이블에서 기본적으로 존재해야한다.
@@ -85,7 +85,7 @@ export class UserModel {
   @Generated('uuid') // 자동으로 생성되는 값, @Column과 함께 사용해야한다.
   additionalId: number;
 
-  @OneToOne(() => ProfileModel, (profile) => profile.user, {
+  @OneToOne(() => StudyProfileModel, (profile) => profile.user, {
     // find() 실행할때마다 항상 같이 가져올 relation
     // true를 하면 profile을 자동으로 가져옴 (기본값은 false)
     eager: true,
@@ -107,10 +107,10 @@ export class UserModel {
     // "restrict" -> 참조하는 Row가 있으면 삭제 불가능
     onDelete: 'SET NULL',
   })
-  profile: ProfileModel;
+  profile: StudyProfileModel;
 
-  @OneToMany(() => PostModel, (post) => post.author)
-  posts: PostModel[];
+  @OneToMany(() => StudyPostModel, (post) => post.author)
+  posts: StudyPostModel[];
 
   @Column({ default: 0 })
   count: number;

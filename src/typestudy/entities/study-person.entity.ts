@@ -10,7 +10,7 @@ export class Name {
 }
 
 @Entity()
-export class StudentModel {
+export class StudyStudentModel {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,7 +23,7 @@ export class StudentModel {
 }
 
 @Entity()
-export class TeacherModel {
+export class StudyTeacherModel {
   @PrimaryGeneratedColumn()
   id: number;
 

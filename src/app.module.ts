@@ -2,22 +2,25 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModel } from './entity/user.entity';
-import { StudentModel, TeacherModel } from './entity/person.entity';
+import { StudyUserModel } from './typestudy/entities/study-user.entity';
+import {
+  StudyStudentModel,
+  StudyTeacherModel,
+} from './typestudy/entities/study-person.entity';
 import {
   AirplaneModel,
   BookModel,
   CarModel,
   ComputerModel,
-  SingleBaseModel,
-} from './entity/inheritance.entity';
-import { ProfileModel } from './entity/profile.entity';
-import { PostModel } from './entity/post.entity';
-import { TagModel } from './entity/tag.entity';
+  StudySingleBaseModel,
+} from './typestudy/entities/study-inheritance.entity';
+import { StudyProfileModel } from './typestudy/entities/study-profile.entity';
+import { StudyPostModel } from './typestudy/entities/study-post.entity';
+import { StudyTagModel } from './typestudy/entities/study-tag.entity';
+import { TypestudyModule } from './typestudy/typestudy.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserModel, ProfileModel, PostModel, TagModel]),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: '127.0.0.1',
@@ -26,20 +29,21 @@ import { TagModel } from './entity/tag.entity';
       password: 'postgres',
       database: 'typeormstudy',
       entities: [
-        UserModel,
-        StudentModel,
-        TeacherModel,
+        StudyUserModel,
+        StudyStudentModel,
+        StudyTeacherModel,
         BookModel,
         CarModel,
-        SingleBaseModel,
+        StudySingleBaseModel,
         ComputerModel,
         AirplaneModel,
-        ProfileModel,
-        PostModel,
-        TagModel,
+        StudyProfileModel,
+        StudyPostModel,
+        StudyTagModel,
       ],
       synchronize: true,
     }),
+    TypestudyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

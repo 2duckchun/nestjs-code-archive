@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 // 기본적인 class inheritance
-export class BaseModel {
+export class StudyBaseModel {
   @PrimaryGeneratedColumn()
   id: number;
   @CreateDateColumn()
@@ -19,13 +19,13 @@ export class BaseModel {
 }
 
 @Entity()
-export class BookModel extends BaseModel {
+export class BookModel extends StudyBaseModel {
   @Column()
   name: string;
 }
 
 @Entity()
-export class CarModel extends BaseModel {
+export class CarModel extends StudyBaseModel {
   @Column()
   brand: string;
 }
@@ -40,7 +40,7 @@ export class CarModel extends BaseModel {
     type: 'varchar',
   },
 })
-export class SingleBaseModel {
+export class StudySingleBaseModel {
   @PrimaryGeneratedColumn()
   id: number;
   @CreateDateColumn()
@@ -50,13 +50,13 @@ export class SingleBaseModel {
 }
 
 @ChildEntity()
-export class ComputerModel extends SingleBaseModel {
+export class ComputerModel extends StudySingleBaseModel {
   @Column()
   brand: string;
 }
 
 @ChildEntity()
-export class AirplaneModel extends SingleBaseModel {
+export class AirplaneModel extends StudySingleBaseModel {
   @Column()
   country: string;
 }

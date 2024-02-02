@@ -5,16 +5,16 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserModel } from './user.entity';
+import { StudyUserModel } from './study-user.entity';
 
 @Entity()
-export class ProfileModel {
+export class StudyProfileModel {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => UserModel, (user) => user.profile)
+  @OneToOne(() => StudyUserModel, (user) => user.profile)
   @JoinColumn()
-  user: UserModel;
+  user: StudyUserModel;
 
   @Column()
   profileImg: string;
