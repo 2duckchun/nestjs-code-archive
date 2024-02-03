@@ -54,7 +54,7 @@ export class AuthService {
 
     return this.jwtService.sign(payload, {
       secret: SECRET_KEY,
-      expiresIn: isRefreshToken ? '3600' : '600',
+      expiresIn: isRefreshToken ? 3600 : 600,
     });
   }
 
@@ -75,5 +75,28 @@ export class AuthService {
 
     const token = splitToken[1];
     return token;
+  }
+
+  verifyToken(token: string) {
+    return this.jwtService.verify(token, {
+      secret: SECRET_KEY,
+    });
+  }
+  //
+
+  rotateToken(token: string, isRefreshToken: boolean) {
+    const decoded = this.verifyToken(token);
+    if (decoded.type !== 'refresh') {
+      throw new UnauthorizedException(
+        'refresh token으로만 토큰 갱신이 가능합니다.',
+      );
+    }
+
+    return this.signToken(
+      {
+        ...decoded,
+      },
+      isRefreshToken,
+    );
   }
 }

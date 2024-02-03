@@ -12,7 +12,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register/email')
-  async registerWithEmail(
+  async postRegisterWithEmail(
     @Body('email') email: string,
     @Body('nickname') nickname: string,
     @Body('password') password: string,
@@ -25,10 +25,28 @@ export class AuthController {
   }
 
   @Post('login/email')
-  async loginWithEmail(@Headers('authorization') rawToken: string) {
+  async postLoginWithEmail(@Headers('authorization') rawToken: string) {
     const token = this.authService.extractTokenFromHeader(rawToken, false);
     const credentials = this.decodedBasicToken(token);
     return this.authService.loginWithEmail(credentials);
+  }
+
+  @Post('token/access')
+  postTokenAccess(@Headers('authorization') rawToken: string) {
+    const token = this.authService.extractTokenFromHeader(rawToken, true);
+    const newToken = this.authService.rotateToken(token, false);
+    return {
+      accessToken: newToken,
+    };
+  }
+
+  @Post('token/refresh')
+  postTokenRefresh(@Headers('authorization') rawToken: string) {
+    const token = this.authService.extractTokenFromHeader(rawToken, true);
+    const newToken = this.authService.rotateToken(token, true);
+    return {
+      refreshToken: newToken,
+    };
   }
 
   decodedBasicToken(base64String: string) {
