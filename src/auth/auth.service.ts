@@ -24,4 +24,11 @@ export class AuthService {
       expiresIn: isRefreshToken ? '3600' : '600',
     });
   }
+
+  loginUser(user: Pick<UserModel, 'id' | 'email'>) {
+    return {
+      accessToken: this.signToken(user, false),
+      refreshToken: this.signToken(user, true),
+    };
+  }
 }
