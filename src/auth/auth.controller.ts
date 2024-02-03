@@ -17,4 +17,12 @@ export class AuthController {
       password,
     });
   }
+
+  @Post('login/email')
+  async loginWithEmail(
+    @Body('email') email: string,
+    @Body('password') password: string,
+  ) {
+    return this.authService.loginWithEmail({ email, password });
+  }
 }
