@@ -12,6 +12,22 @@ export class AuthService {
     private readonly userService: UsersService,
   ) {}
 
+  async registerWithEmail(
+    user: Pick<UserModel, 'nickname' | 'email' | 'password'>,
+  ) {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    const newUser = await this.userService.createUser({
+      ...user,
+      password: hashedPassword,
+    });
+    return this.loginUser(newUser);
+  }
+
+  async loginWithEmail(user: Pick<UserModel, 'email' | 'password'>) {
+    const existingUser = await this.authenticateWithEmailAndPassword(user);
+    return this.loginUser(existingUser);
+  }
+
   async authenticateWithEmailAndPassword(
     user: Pick<UserModel, 'email' | 'password'>,
   ) {
