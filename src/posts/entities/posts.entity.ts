@@ -15,9 +15,13 @@ export class PostModel {
   @Column()
   content: string;
 
-  @Column()
+  @Column({
+    default: 0,
+  })
   likeCount: number;
 
-  @Column()
+  @Column({
+    default: 0,
+  })
   commentCount: number;
 }
