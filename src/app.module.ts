@@ -23,6 +23,7 @@ import { PostsModule } from './posts/posts.module';
 import { UserModel } from './users/entities/users.entity';
 import { PostModel } from './posts/entities/posts.entity';
 import { AuthModule } from './auth/auth.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     PostsModule,
     AuthModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
