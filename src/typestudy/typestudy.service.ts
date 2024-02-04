@@ -224,7 +224,9 @@ export class TypestudyService {
   getPosts() {
     return this.studyPostRepository.find({
       relations: {
-        tags: true,
+        tags: {
+          posts: true,
+        },
       },
     });
   }
