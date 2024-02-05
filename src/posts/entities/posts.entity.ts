@@ -4,7 +4,7 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 
 @Entity()
 export class PostModel extends BaseModel {
-  @ManyToOne(() => UserModel, (user) => user.posts)
+  @ManyToOne(() => UserModel, (user) => user.posts, { nullable: false })
   author: UserModel;
 
   @Column()
