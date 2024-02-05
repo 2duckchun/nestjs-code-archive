@@ -99,4 +99,18 @@ export class AuthService {
       isRefreshToken,
     );
   }
+
+  decodedBasicToken(base64String: string) {
+    const decoded = Buffer.from(base64String, 'base64').toString('utf-8');
+    const split = decoded.split(':');
+    if (split.length !== 2) {
+      throw new UnauthorizedException('잘못된 토큰 정보입니다.');
+    }
+    const [email, password] = split;
+
+    return {
+      email,
+      password,
+    };
+  }
 }

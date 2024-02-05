@@ -1,12 +1,8 @@
-import {
-  Body,
-  Controller,
-  Headers,
-  Post,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Body, Controller, Headers, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { MaxLengthPipe, MinLengthPipe } from './pipe/password.pipe';
+import { BasicTokenGuard } from './guard/basic-token-guard';
+import { RefreshTokenGuard } from './guard/bearer-token-guard';
 
 @Controller('auth')
 export class AuthController {
@@ -27,13 +23,15 @@ export class AuthController {
   }
 
   @Post('login/email')
+  @UseGuards(BasicTokenGuard)
   async postLoginWithEmail(@Headers('authorization') rawToken: string) {
     const token = this.authService.extractTokenFromHeader(rawToken, false);
-    const credentials = this.decodedBasicToken(token);
+    const credentials = this.authService.decodedBasicToken(token);
     return this.authService.loginWithEmail(credentials);
   }
 
   @Post('token/access')
+  @UseGuards(RefreshTokenGuard)
   postTokenAccess(@Headers('authorization') rawToken: string) {
     const token = this.authService.extractTokenFromHeader(rawToken, true);
     const newToken = this.authService.rotateToken(token, false);
@@ -43,25 +41,12 @@ export class AuthController {
   }
 
   @Post('token/refresh')
+  @UseGuards(RefreshTokenGuard)
   postTokenRefresh(@Headers('authorization') rawToken: string) {
     const token = this.authService.extractTokenFromHeader(rawToken, true);
     const newToken = this.authService.rotateToken(token, true);
     return {
       refreshToken: newToken,
-    };
-  }
-
-  decodedBasicToken(base64String: string) {
-    const decoded = Buffer.from(base64String, 'base64').toString('utf-8');
-    const split = decoded.split(':');
-    if (split.length !== 2) {
-      throw new UnauthorizedException('잘못된 토큰 정보입니다.');
-    }
-    const [email, password] = split;
-
-    return {
-      email,
-      password,
     };
   }
 }

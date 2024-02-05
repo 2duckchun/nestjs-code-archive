@@ -12,6 +12,7 @@ import { SECRET_KEY } from './const/auth.const';
     }),
     UsersModule,
   ],
+  exports: [AuthService],
   controllers: [AuthController],
   providers: [AuthService],
 })
